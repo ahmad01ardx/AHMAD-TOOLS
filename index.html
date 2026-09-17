@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Ahmad Tools - simple, fast and free online calculators.">
+<title>AHMAD TOOLS - Free Online Tools</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#0b1020;color:#f5f7ff}
+header{padding:28px 18px;text-align:center;background:linear-gradient(135deg,#111a35,#18284d)}
+.logo{font-size:30px;font-weight:800;letter-spacing:2px}
+.tag{color:#aebbd8;margin-top:8px}
+.container{max-width:1050px;margin:auto;padding:25px 16px}
+.search{width:100%;padding:15px;border-radius:12px;border:1px solid #33415f;background:#11182b;color:white;font-size:16px;margin-bottom:22px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.card{background:#121a2d;border:1px solid #293654;border-radius:18px;padding:20px}
+.card h2{margin-top:0}
+input,select,button{width:100%;padding:12px;margin:7px 0;border-radius:10px;border:1px solid #3a4867;font-size:15px}
+input,select{background:#0c1324;color:white}
+button{background:#2563eb;color:white;border:0;font-weight:bold;cursor:pointer}
+button:hover{opacity:.9}
+.result{margin-top:10px;padding:12px;border-radius:10px;background:#0b1325;color:#9fc2ff;font-weight:bold;min-height:20px}
+footer{text-align:center;padding:30px;color:#8997b5}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">AHMAD TOOLS</div>
+  <div class="tag">Simple • Fast • Free Online Tools</div>
+</header>
+
+<main class="container">
+<input id="search" class="search" type="search" placeholder="Search tools..." oninput="filterTools()">
+
+<div class="grid">
+<section class="card tool">
+<h2>Percentage Calculator</h2>
+<input id="p1" type="number" placeholder="Percentage (%)">
+<input id="p2" type="number" placeholder="Value">
+<button onclick="percentage()">Calculate</button>
+<div id="pr" class="result"></div>
+</section>
+
+<section class="card tool">
+<h2>Percentage Increase</h2>
+<input id="old" type="number" placeholder="Starting value">
+<input id="new" type="number" placeholder="New value">
+<button onclick="increase()">Calculate</button>
+<div id="ir" class="result"></div>
+</section>
+
+<section class="card tool">
+<h2>Time Calculator</h2>
+<input id="minutes" type="number" placeholder="Minutes">
+<button onclick="timeCalc()">Convert to hours</button>
+<div id="tr" class="result"></div>
+</section>
+
+<section class="card tool">
+<h2>Simple Profit Calculator</h2>
+<input id="cost" type="number" placeholder="Cost price">
+<input id="sell" type="number" placeholder="Selling price">
+<button onclick="profit()">Calculate</button>
+<div id="fr" class="result"></div>
+</section>
+
+<section class="card tool">
+<h2>Age Calculator</h2>
+<input id="dob" type="date">
+<button onclick="ageCalc()">Calculate age</button>
+<div id="ar" class="result"></div>
+</section>
+
+<section class="card tool">
+<h2>Discount Calculator</h2>
+<input id="price" type="number" placeholder="Original price">
+<input id="discount" type="number" placeholder="Discount (%)">
+<button onclick="discountCalc()">Calculate</button>
+<div id="dr" class="result"></div>
+</section>
+</div>
+</main>
+
+<footer>© 2026 AHMAD TOOLS • Built with HTML, CSS & JavaScript</footer>
+
+<script>
+function num(id){return parseFloat(document.getElementById(id).value)}
+function out(id,text){document.getElementById(id).textContent=text}
+function percentage(){let a=num('p1'),b=num('p2');out('pr',isNaN(a)||isNaN(b)?'Enter both values.':a+'% of '+b+' = '+(a*b/100))}
+function increase(){let a=num('old'),b=num('new');out('ir',isNaN(a)||isNaN(b)||a===0?'Enter valid values.':'Change = '+(((b-a)/a)*100).toFixed(2)+'%')}
+function timeCalc(){let m=num('minutes');out('tr',isNaN(m)?'Enter minutes.':Math.floor(m/60)+' hours '+(m%60)+' minutes')}
+function profit(){let c=num('cost'),s=num('sell');out('fr',isNaN(c)||isNaN(s)?'Enter both values.':'Profit/Loss = '+(s-c).toFixed(2))}
+function ageCalc(){let d=document.getElementById('dob').value;if(!d){out('ar','Select your date of birth.');return}let birth=new Date(d),now=new Date();let age=now.getFullYear()-birth.getFullYear();let md=now.getMonth()-birth.getMonth();if(md<0||(md===0&&now.getDate()<birth.getDate()))age--;out('ar','Age: '+age+' years')}
+function discountCalc(){let p=num('price'),d=num('discount');if(isNaN(p)||isNaN(d)){out('dr','Enter both values.');return}let save=p*d/100;out('dr','You save '+save.toFixed(2)+' • Final price '+(p-save).toFixed(2))}
+function filterTools(){let q=document.getElementById('search').value.toLowerCase();document.querySelectorAll('.tool').forEach(x=>x.classList.toggle('hidden',!x.innerText.toLowerCase().includes(q)))}
+</script>
+</body>
+</html>
